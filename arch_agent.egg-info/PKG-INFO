@@ -1,3 +1,18 @@
+Metadata-Version: 2.4
+Name: arch-agent
+Version: 1.0.0
+Summary: Arch Linux AI System Agent — control your desktop with natural language
+License: GPL-3.0-or-later
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: litellm>=1.40.0
+Requires-Dist: ollama>=0.2.0
+Requires-Dist: duckduckgo-search>=6.0.0
+Requires-Dist: rich>=13.0.0
+Requires-Dist: pydantic>=2.0.0
+Dynamic: license-file
+
 # 🤖 Arch Linux AI System Agent
 
 A local, AI-powered system agent for Arch Linux using a **Hybrid LLM Gateway Architecture**. Routes queries between a lightweight local model (Ollama) 
@@ -95,27 +110,16 @@ To allow the `media_play` tool to instantly search atask complexitnd auto-play s
 
 ```bash
 # Clone or navigate to the project
-git clone https://github.com/Marsel204/Bash-AI-Agent-For-Arch-Linux.git
-cd Bash-AI-Agent-For-Arch-Linux
+cd ~/Work/Agent
 
-# Run the installer
-bash install.sh
-```
+# Create a virtual environment
+python -m venv .venv
 
-That's it. The installer will:
-- Copy the agent to `~/.local/share/arch-agent/`
-- Install Python dependencies via `pip install --user`
-- Create an `agent` command at `~/.local/bin/agent`
+# Activate the virtual environment
+source .venv/bin/activate
 
-> **Note:** If `~/.local/bin` is not in your `PATH`, add this to your `~/.bashrc` or `~/.zshrc`:
-> ```bash
-> export PATH="$HOME/.local/bin:$PATH"
-> ```
-
-### Uninstall
-
-```bash
-bash uninstall.sh
+# Install Python dependencies
+pip install -r requirements.txt
 ```
 
 ---
@@ -125,11 +129,14 @@ bash uninstall.sh
 ### Start the Agent
 
 ```bash
-# Launch the agent
-agent
+# Make sure the venv is activated
+source .venv/bin/activate
+
+# Run the agent
+python agent.py
 
 # Or launch with the interactive Ollama model selector
-agent --select
+python agent.py --select
 ```
 
 You'll see an interactive prompt:
@@ -137,7 +144,7 @@ You'll see an interactive prompt:
 ```
 ╭──────────────────────────────────────────────╮
 │     🤖  Arch Linux AI System Agent           │
-│  Local: driaforall/tiny-agent-a:0.5b         │
+│  Local: ollama/driaforall/tiny-agent-... | Cloud: ... │
 │  Type 'quit' or 'exit' to leave.             │
 ╰──────────────────────────────────────────────╯
 
@@ -189,10 +196,7 @@ Agent/
 ├── agent.py              # Main entry point — interactive REPL
 ├── config.py             # Model config, API keys, routing keywords
 ├── router.py             # Hybrid routing logic (local vs cloud)
-├── pyproject.toml        # Python package metadata
 ├── requirements.txt      # Python dependencies
-├── install.sh            # One-command installer
-├── uninstall.sh          # Clean uninstaller
 ├── README.md
 └── tools/
     ├── __init__.py        # Tool registry & OpenAI-style definitions
@@ -272,18 +276,31 @@ Add your tool name and description to the `SYSTEM_PROMPT` string so the LLM know
 
 ---
 
+## Quick Alias Setup
+
+Add this to your `~/.bashrc` or `~/.zshrc` for one-command launch:
+
+```bash
+alias agent='source ~/Work/Agent/.venv/bin/activate && python ~/Work/Agent/agent.py'
+```
+
+Then just run:
+
+```bash
+agent
+```
+
 ---
 
 ## Troubleshooting
 
 | Issue | Fix |
 |-------|-----|
-| `agent: command not found` | Make sure `~/.local/bin` is in your PATH (see Installation) |
 | `ollama: command not found` | Install Ollama: `curl -fsSL https://ollama.com/install.sh \| sh` |
 | `No players found` | Start Spotify or another MPRIS player first |
 | `playerctl: command not found` | `sudo pacman -S playerctl` |
 | Local model too slow | Increase `LOCAL_TIMEOUT` in `config.py` or use `/route` to force cloud |
-| `ModuleNotFoundError` | Re-run `bash install.sh` to reinstall dependencies |
+| `ModuleNotFoundError` | Make sure venv is activated: `source .venv/bin/activate` |
 
 ---
 

@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "arch-agent"
+version = "1.0.0"
+description = "Arch Linux AI System Agent — control your desktop with natural language"
+readme = "README.md"
+license = {text = "GPL-3.0-or-later"}
+requires-python = ">=3.11"
+dependencies = [
+    "litellm>=1.40.0",
+    "ollama>=0.2.0",
+    "duckduckgo-search>=6.0.0",
+    "rich>=13.0.0",
+    "pydantic>=2.0.0",
+]
+
+[project.scripts]
+agent = "agent:main"
+
+[tool.setuptools]
+py-modules = ["agent", "config", "router"]
+
+[tool.setuptools.packages.find]
+include = ["tools*"]
