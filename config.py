@@ -4,6 +4,10 @@ Modify API keys and model settings here.
 """
 
 import os
+from dotenv import load_dotenv
+
+dotenv_path = os.path.join(os.path.dirname(__file__), ".env")
+load_dotenv(dotenv_path)  # Take environment variables from .env.
 
 # ─── Local Model (Ollama) ────────────────────────────────────────────
 LOCAL_MODEL = "ollama/driaforall/tiny-agent-a:0.5b"

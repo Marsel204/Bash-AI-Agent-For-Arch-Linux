@@ -45,6 +45,10 @@ cp "${SCRIPT_DIR}/config.py" "${INSTALL_DIR}/"
 cp "${SCRIPT_DIR}/router.py" "${INSTALL_DIR}/"
 cp -r "${SCRIPT_DIR}/tools" "${INSTALL_DIR}/"
 
+if [ -f "${SCRIPT_DIR}/.env" ]; then
+    cp "${SCRIPT_DIR}/.env" "${INSTALL_DIR}/.env"
+fi
+
 echo -e "  ${GREEN}✓${NC} Source files copied"
 
 # ─── 3. Install Python dependencies ──────────────────────────────────

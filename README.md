@@ -78,14 +78,18 @@ ollama list
 
 ### Spotify API (Smart Auto-Play)
 
-To allow the `media_play` tool to instantly search atask complexitnd auto-play specific tracks without opening browser tabs, you must provide Spotify Developer credentials:
+To allow the `media_play` tool to instantly search and auto-play specific tracks without opening browser tabs, you must provide Spotify Developer credentials:
 
 1. Sign in to the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard)
 2. Create a new App to get keys.
-3. Export them in your environment:
+3. Create a `.env` file in the project root (you can copy from `.env.example`):
    ```bash
-   export SPOTIFY_CLIENT_ID="your_client_id"
-   export SPOTIFY_CLIENT_SECRET="your_client_secret"
+   cp .env.example .env
+   ```
+4. Add your keys to the `.env` file:
+   ```env
+   SPOTIFY_CLIENT_ID="your_client_id"
+   SPOTIFY_CLIENT_SECRET="your_client_secret"
    ```
 *(If the API fails or keys aren't provided, the agent will safely fall back to opening a browser search.)*
 
